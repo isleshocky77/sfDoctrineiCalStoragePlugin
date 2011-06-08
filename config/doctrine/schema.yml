@@ -1,0 +1,40 @@
+sfiCalEvent:
+  actAs:
+    Timestampable: ~
+  columns:
+    description: string(255)
+    location: string
+    summary: string
+    status:
+      type: enum
+      values: [ 'tentative', 'confirmed', 'cancelled' ]
+    classification:
+      type: enum
+      values: [ 'public', 'private', 'confidential' ]
+      default: 'public'
+    priority:
+      type: integer(3)
+      range: [0, 9]
+    all_day:
+      type: boolean
+      default: false
+    start_date: timestamp
+    end_date: timestamp
+    recurrence_id: integer
+    #@TODO Should this be done differently
+    exception_dates: string
+    original_date: timestamp
+  relations:
+    Recurrence:
+      class: sfiCalRecurrence
+      local: recurrence_id
+      type: one
+
+sfiCalRecurrence:
+  columns:
+    event_id: integer
+  relations:
+    Event:
+      class: sfiCalEvent
+      local: event_id
+      type: one
