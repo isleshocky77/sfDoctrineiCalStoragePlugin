@@ -22,19 +22,45 @@ sfiCalEvent:
     end_date: timestamp
     recurrence_id: integer
     #@TODO Should this be done differently
-    exception_dates: string
+    exception_dates: array
     original_date: timestamp
   relations:
-    Recurrence:
-      class: sfiCalRecurrence
-      local: recurrence_id
-      type: one
 
 sfiCalRecurrence:
   columns:
-    event_id: integer
+    bydaydays:
+      type: array
+    bydayfreq:
+      type: array
+    bymonth:
+      type: array
+    bymonthday:
+      type: array
+    bysetpos:
+      type: array
+    byweeknumber:
+      type: array
+    byyearday:
+      type: array
+    byyearday:
+      type: array
+    count:
+      type: integer
+    frequency:
+      type: enum
+      values: [ 'daily', 'weekly', 'monthly', 'yearly' ]
+    frequency_interval:
+      type: integer
+    until:
+      type: date
+    weekstartday:
+      type: enum
+      values: [ 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' ]
   relations:
     Event:
       class: sfiCalEvent
-      local: event_id
+      local: id
       type: one
+      foreign: recurrence_id
+      foreignType: one
+      foreignAlias: Recurrence

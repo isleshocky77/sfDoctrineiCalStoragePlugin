@@ -1,0 +1,10 @@
+sfiCalEvent:
+  event_1:
+    description: 'Lorem Ipsum'
+    location: '123 Street Rd, New York, NY, 10010 (Headquarters)'
+    summary: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at metus eget massa varius hendrerit ut at elit. Vivamus a ligula at ligula molestie suscipit. Etiam nec odio dui. Aliquam nec orci sit amet diam malesuada varius at et nulla. Donec eget fermentum sem. Fusce vel mi at erat placerat lacinia. Vestibulum volutpat elit quis tellus sollicitudin laoreet. Nunc blandit tincidunt sodales. Morbi eu magna leo. Proin faucibus nisi porta elit condimentum rhoncus. Nullam tempus imperdiet ligula, hendrerit gravida est gravida sed. Donec lacus mauris, varius ut pharetra at, vulputate id augue. Ut placerat nisl sit amet justo condimentum volutpat. Donec at est at metus accumsan pretium. Sed pharetra ornare dolor, eu ullamcorper ligula fringilla ut. Pellentesque varius enim eget nunc ullamcorper tristique.
+    status: confirmed
+    Recurrence:
+      frequency: daily
+      frequency_interval: 2

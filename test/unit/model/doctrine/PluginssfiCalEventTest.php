@@ -46,4 +46,21 @@ try {
   $t->pass('Cannot save invalid "priority" and "status" properties');
 }
 
+$event = new sfiCalEvent();
+$event->description = TEST_EVENT_DESCRIPTION.rand();
+$event->location = 'Test Location';
+$event->Recurrence->frequency = 'daily';
+$event->Recurrence->frequency_interval = 2;
+$event->save();
+
+$Event = sfiCalEventTable::getInstance()->find($event->id);
+$t->isa_ok($Event, 'sfiCalEvent', '$Event is of type "sfiCalEvent"');
+$t->isa_ok($Event->Recurrence, 'sfiCalRecurrence', '$Event->Recurrence is of type "sfiCalRecurrence"');
+
+$Recurrence = sfiCalRecurrenceTable::getInstance()->find($Event->Recurrence);
+$t->isa_ok($Recurrence, 'sfiCalRecurrence', '$Recurrence is of type "sfiCalRecurrence');
+$t->isa_ok($Recurrence->Event, 'sfiCalEvent', '$Recurrence->Event is of type of "sfiCaleEvent"');
+$t->is($Recurrence->Event->location, 'Test Location', '$Recurrence->Event->locatoin is correct from the Event');
+
+
 //cleanup(); # Be a good neighbor and cleanup when done
