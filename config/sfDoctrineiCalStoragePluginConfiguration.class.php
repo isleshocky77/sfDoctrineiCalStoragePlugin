@@ -17,6 +17,5 @@ class sfDoctrineiCalStoragePluginConfiguration extends sfPluginConfiguration
     $connection = $event['connection'];
 
     $connection->setAttribute(Doctrine_Core::ATTR_VALIDATE, Doctrine_Core::VALIDATE_ALL);
-    $connection->setAttribute(Doctrine_Core::ATTR_USE_NATIVE_ENUM, 'use_native_enum', true);
   }
 }
