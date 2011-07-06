@@ -1,13 +1,20 @@
+sfiCalCalendar:
+  columns:
+    title: string(255)
+    notes: string
+
 sfiCalEvent:
   actAs:
     Timestampable: ~
   columns:
+    calendar_id: integer
     description: string(255)
     location: string
     summary: string
     status:
       type: enum
       values: [ 'tentative', 'confirmed', 'cancelled' ]
+      default: 'confirmed'
     classification:
       type: enum
       values: [ 'public', 'private', 'confidential' ]
@@ -25,15 +32,26 @@ sfiCalEvent:
     exception_dates: array
     original_date: timestamp
   relations:
+    Calendar:
+      class: sfiCalCalendar
+      local: calendar_id
+      foreign: id
+      type: one
+      foreignType: many
+      foreignAlias: Events
+      onDelete: CASCADE
 
 sfiCalRecurrence:
   columns:
     bydaydays:
       type: array
+#      Arrayvalues: [ sunday, monday, tuesday, wednesday, thursday, friday, saturday ]
     bydayfreq:
       type: array
+#      Arrayvalues: [ sunday, monday, tuesday, wednesday, thursday, friday, saturday]
     bymonth:
       type: array
+#       Arrayrange: [1, 12]
     bymonthday:
       type: array
     bysetpos:
@@ -49,6 +67,8 @@ sfiCalRecurrence:
     frequency:
       type: enum
       values: [ 'daily', 'weekly', 'monthly', 'yearly' ]
+      notnull: true
+      notblank: true
     frequency_interval:
       type: integer
     until:
@@ -64,3 +84,4 @@ sfiCalRecurrence:
       foreign: recurrence_id
       foreignType: one
       foreignAlias: Recurrence
+      onDelete: CASCADE
