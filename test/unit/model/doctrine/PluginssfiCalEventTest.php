@@ -33,17 +33,26 @@ $event->save();
 $saved_event_id = $event->id;
 
 $saved_event = sfiCalEventTable::getInstance()->find($saved_event_id);
-$t->is($saved_event->description, $event->description, 'Saved event "description" should be the same as the retrieved events "description"');
+$t->is($saved_event->description, $event->description, 'Saved sfiCalEvent->"description" should be the same as the retrieved sfiCalEvent->"description"');
 
 $event = new sfiCalEvent();
 $event->description = TEST_EVENT_DESCRIPTION.rand();
 $event->priority = 12;
+try {
+  $event->save();
+  $t->fail('Cannot save "sfiCalEvent" with an invalid "priority" number');
+} catch (Doctrine_Validator_Exception $e) {
+  $t->pass('Cannot save "sfiCalEvent" with an invalid "priority" number');
+}
+
+$event = new sfiCalEvent();
+$event->description = TEST_EVENT_DESCRIPTION.rand();
 $event->status = 'notValid';
 try {
   $event->save();
-  $t->fail('Cannot save invalid "priority" and "status" properties');
+  $t->fail('Cannot save an "sfiCalEvent" with an invalid "status" string');
 } catch (Doctrine_Validator_Exception $e) {
-  $t->pass('Cannot save invalid "priority" and "status" properties');
+  $t->pass('Cannot save an "sfiCalEvent" with an invalid "status" string');
 }
 
 $event = new sfiCalEvent();
@@ -60,7 +69,6 @@ $t->isa_ok($Event->Recurrence, 'sfiCalRecurrence', '$Event->Recurrence is of typ
 $Recurrence = sfiCalRecurrenceTable::getInstance()->find($Event->Recurrence);
 $t->isa_ok($Recurrence, 'sfiCalRecurrence', '$Recurrence is of type "sfiCalRecurrence');
 $t->isa_ok($Recurrence->Event, 'sfiCalEvent', '$Recurrence->Event is of type of "sfiCaleEvent"');
-$t->is($Recurrence->Event->location, 'Test Location', '$Recurrence->Event->locatoin is correct from the Event');
+$t->is($Recurrence->Event->location, 'Test Location', '$Recurrence->Event->"location" is correct from the sfiCalEvent');
 
-
-//cleanup(); # Be a good neighbor and cleanup when done
+cleanup(); # Be a good neighbor and cleanup when done
